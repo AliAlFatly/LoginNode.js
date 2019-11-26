@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<head>
+    <title>week 7</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="/assets/style.css" >
+</head>
+<body>
+    <div id="nav" class="nav">
+    </div>
+    
+    <div id="login" class="afternav"> 
+
+    </div>
+        
+    <script type="text/javascript"> 
+
+    jQuery(function($) { 
+        load();
+        getCompanyName()
+        });
+
+    function sumbit(){
+                jQuery.ajax({
+                type: "POST",
+                url: "/loginCommit",
+                data: {
+                    username: $("#username").val(),
+                    password: $("#password").val()
+                },
+                success: function(res){
+                    if(res.returnMessage === 'successfuly logged in'){
+                        document.location.href = "/"
+                    }
+                    else{
+                        alert(`${res.returnMessage}`)
+                    }
+
+                }
+            })
+    }
+
+    function load(){
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', "/session", true);
+        xhr.onload = function(){
+            let data = JSON.parse(this.responseText)
+            if(this.status == 200){        
+                if(data.userId){
+                    let loggedNavBar = `<ul>
+                    <li id="companyName"></li>
+                    <li><img src="/assets/images/home.PNG"> <a href="/">home<a></li>
+                    <li><img src="/assets/images/user.PNG"> <a href="/users/information">klantgegevens<a></li>
+                    <li><img src="/assets/images/accountsoverview.PNG"> <a href="/">rekening overzicht</a></li>
+                    <li><img src="/assets/images/login.PNG"><a href="/">overboeking</a></li>
+                    <li class="logout"><a class="logout-a" onclick="logout()" style="color: white">Log ${data.username}(${data.userId}) uit </a></li>
+                    </ul>`
+                    document.getElementById("nav").innerHTML = loggedNavBar;
+                    let userIsLogged = `<p>Je bent al ingelogd, <a href="/">home.</a></p>`
+                    document.getElementById("login").innerHTML = userIsLogged;
+
+                }
+                else{
+                    let loggedNavBar = `<ul>
+                    <li id="companyName"></li>
+                    <li><img src="/assets/images/home.PNG"> <a href="/">home<a></li>
+                    <li><img src="/assets/images/login.PNG"> <a href="/login">aanmelden<a></li>
+                    </ul>`
+                    document.getElementById("nav").innerHTML = loggedNavBar;
+                    let loginForum = `
+                        <h1 id="login-title">Company</h1>
+                        <p class="logb1">Meld je aan </p>
+                        <div class="logb2">
+                            <forum class="login-form">
+                                </br>
+                                <input id="username" type="text" placeholder="gebruikersnaam" value="user1">
+                                </br>
+                                <input id="password" type="password" placeholder="wachtwoord" value="password1">
+                                </br>
+                                <input id="login-button" class="button" type="submit" value="Aanmelden" onclick="sumbit()">
+                            <forum>
+                        </div>
+                    `
+                    document.getElementById("login").innerHTML = loginForum;
+                }
+            }
+        }
+        xhr.send();
+    }
+
+    function logout(){
+        $.ajax({
+            type: "GET",
+            url: "/logout",
+            success: function(res){
+                document.location.href="/";
+            },
+            error: function(err){
+                alert(err);
+            }
+        })
+    }    
+
+    function getCompanyName(){
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "/companyName", true);
+        xhr.onload = function(){
+            if(this.status == 200){
+                let name = this.responseText;
+                if(this.responseText){
+                    document.getElementById("companyName").innerHTML = name;
+                }
+                else {
+                    document.getElementById("companyName").innerHTML = "No name";
+                }
+            }
+        }
+        xhr.send()
+    }
+
+
+    </script>
+</body>
+
+<footer> </footer>

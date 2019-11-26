@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<head>
+    <title>week 7</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="/assets/style.css" >
+</head>
+<body>
+    <div id="nav" class="nav">
+    </div>
+    
+    <div id="userdetails" class="afternav"> 
+
+    </div>
+        
+    <script type="text/javascript"> 
+
+    jQuery(function($) { 
+        load();
+        getCompanyName()
+        var id;
+        });
+
+    function updateUser(){
+        console.log(id)
+                jQuery.ajax({
+                type: "PUT",
+                url: "/users/update/",
+                data: JSON.stringify({
+                        id: id,
+                        firstLetters: $("#firstLetters").val(),
+                        lastName: $("#lastName").val(),
+                        street: $("#street").val(),
+                        huisNumber: $("#huisNumber").val(),
+                        place: $("#place").val(),
+                        postalCode: $("#postalCode").val(),
+                        BSN: $("#BSN").val(),
+                        birthdate: $("#birthdate").val(),
+                        mobileNumber: $("#mobileNumber").val(),
+                        email: $("#email").val()
+                }),
+                contentType: "application/json",
+                success: function(res){
+                        document.location.href = "/";
+                },
+                error: function(err){
+                    if(err != null){
+                        alert(JSON.stringify(err.statusText));
+                    }
+                    else{
+                        alert("something went wrong")
+                    }
+                    
+                }
+            })
+    }
+
+    function load(){
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', "/session", true);
+        xhr.onload = function(){
+            let data = JSON.parse(this.responseText)
+            if(this.status == 200){        
+                if(data.userId){
+                    let loggedNavBar = `<ul>
+                    <li id="companyName"></li>
+                    <li><img src="/assets/images/home.PNG"> <a href="/">home<a></li>
+                    <li><img src="/assets/images/user.PNG"> <a href="/users/information">klantgegevens<a></li>
+                    <li><img src="/assets/images/accountsoverview.PNG"> <a href="/">rekening overzicht</a></li>
+                    <li><img src="/assets/images/login.PNG"><a href="/">overboeking</a></li>
+                    <li class="logout"><a class="logout-a" onclick="logout()" style="color: white">Log ${data.username}(${data.userId}) uit </a></li>
+                    </ul>`
+                    document.getElementById("nav").innerHTML = loggedNavBar;
+                    let userIsLogged = `            
+                    </br>            
+                    <p class="userdetailb1">gegevens voor ${data.currentUser.firstLetters} ${data.currentUser.lastName} </p>
+                    <div class="userdetailb2">
+                        <forum class="login-form">
+                            </br>
+                            <h1>klantgegevens<h1>
+                            </br>
+                            <label class="userDetailLabel">Voorletters</label> <input class="userDetailInput" id="firstLetters" type="text" placeholder="gebruikersnaam" value="${data.currentUser.firstLetters}">
+                            </br>
+                            <label class="userDetailLabel">Achternaam</label> <input class="userDetailInput" id="lastName" type="text" placeholder="gebruikersnaam" value="${data.currentUser.lastName}">
+                            </br>
+                            <label class="userDetailLabel">Straat</label> <input class="userDetailInput" id="street" type="text" placeholder="gebruikersnaam" value="${data.currentUser.street}">
+                            </br>
+                            <label class="userDetailLabel">Huisnummer</label> <input class="userDetailInput" id="huisNumber" type="text" placeholder="gebruikersnaam" value="${data.currentUser.huisNumber}">
+                            </br>
+                            <label class="userDetailLabel">Plaats</label> <input class="userDetailInput" id="place" type="text" placeholder="gebruikersnaam" value="${data.currentUser.place}">
+                            </br>
+                            <label class="userDetailLabel">Postcode</label> <input class="userDetailInput" id="postalCode" type="text" placeholder="gebruikersnaam" value="${data.currentUser.postalCode}">
+                            </br>
+                            <label class="userDetailLabel">BSN</label> <input class="userDetailInput" id="BSN" type="text" placeholder="gebruikersnaam" value="${data.currentUser.BSN}">
+                            </br>
+                            <label class="userDetailLabel">Geboorte datum</label> <input class="userDetailInput" id="birthdate" type="text" placeholder="gebruikersnaam" value="${data.currentUser.birthdate}">
+                            </br>
+                            <label class="userDetailLabel">Tel.nr</label> <input class="userDetailInput" id="mobileNumber" type="text" placeholder="gebruikersnaam" value="${data.currentUser.mobileNumber}">
+                            </br>
+                            <label class="userDetailLabel">Email</label> <input class="userDetailInput" id="email" type="text" placeholder="gebruikersnaam" value="${data.currentUser.email}">
+                            <input id="userDetailSubmit" class="userDetailsButton" value="Opslaan" type="sumbit" onclick="updateUser()">
+                        <forum>
+                    </div>`
+                    document.getElementById("userdetails").innerHTML = userIsLogged;
+                    id = data.currentUser.id;
+
+                }
+                else{
+                    let loggedNavBar = `<ul>
+                    <li id="companyName"></li>
+                    <li><img src="/assets/images/home.PNG"> <a href="/">home<a></li>
+                    <li><img src="/assets/images/login.PNG"> <a href="/login">aanmelden<a></li>
+                    </ul>`
+                    document.getElementById("nav").innerHTML = loggedNavBar;
+                    let userIsNotLogged = `<p>please login.<p>`
+                    document.getElementById("userdetails").innerHTML = userIsNotLogged;
+                }
+            }
+        }
+        xhr.send();
+    }
+
+    function logout(){
+        $.ajax({
+            type: "GET",
+            url: "/logout",
+            success: function(res){
+                document.location.href="/";
+            },
+            error: function(err){
+                alert(err);
+            }
+        })
+    }
+
+    function getCompanyName(){
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "/companyName", true);
+        xhr.onload = function(){
+            if(this.status == 200){
+                let name = this.responseText;
+                if(this.responseText){
+                    document.getElementById("companyName").innerHTML = name;
+                }
+                else {
+                    document.getElementById("companyName").innerHTML = "No name";
+                }
+            }
+        }
+        xhr.send()
+    }
+
+
+    </script>
+</body>
+
+<footer> </footer>

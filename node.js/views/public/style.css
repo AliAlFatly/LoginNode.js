@@ -1,0 +1,187 @@
+body {
+    background-color: white;
+}
+
+li img {
+    width: 20px;
+    height: 20px;
+}
+
+.nav ul li {
+    display: inline-block;
+    margin: 5px 10px 0px 0px;
+    padding: 0px 10px 0px 0px;
+}
+
+.nav ul {
+    left: 0px;
+    position: relative;
+}
+
+.nav ul li a {
+    color: rgb(85, 82, 82);
+}
+
+#companyName {
+    left: 0px;
+    color: white;
+    font-size: 20px;
+}
+
+.nav {
+    background-color: rgb(16, 48, 48);
+    margin: 0px;
+    padding: 0px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    position: fixed;
+}
+
+.afternav {
+    padding-top: 50px;
+}
+
+.lastLogin {
+    background-color: pink;
+    padding: 15px;
+    margin: 5px, 5px, 5px, 5px;
+}
+
+#login {
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+}
+
+#login-title {
+    text-align: center;
+}
+
+#aanmelden {
+    display: inline-block;
+    text-align: left;
+    padding: 10px;
+}
+
+.login-form {
+    padding: 12px 20px;
+    margin: 8px 0;
+    padding: 10px;
+}
+
+.logb1 {
+    border-style: solid;
+    border-width: 2px;
+    border-bottom: 0px;
+    margin: auto;
+    padding: 5px;
+    background-color: rgba(156, 156, 156, 0.801);
+    -webkit-border-radius: 10px 10px 0px 0px;
+    -moz-border-radius: 10px 10px 0px 0px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.logb2 {
+    border-style: solid;
+    border-width: 2px;
+    margin: auto;
+    padding: 0px 15px;
+    -webkit-border-radius: 0px 0px 10px 10px;
+    -moz-border-radius: 0px 0px 10px 10px;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.button {
+    background-color: blue;
+    color: white;
+}
+
+input {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.logout {
+    text-align: center;
+    margin: auto;
+    background-color: rgb(141, 141, 141);
+    color: white;
+    width: 180px;
+    height: 30px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    float: right;
+}
+
+.userDetailLabel {
+    display: inline-block;
+    width: 00px;
+    font-size: 0.75EM;
+}
+
+.userDetailInput {
+    display: inline-block;
+    width: 50px;
+    font-size: 0.6EM;
+}
+
+.userDetailsButton {
+    background-color: blue;
+    color: white;
+}
+
+.userdetailb1 {
+    margin: 20px 25px 0px 25px;
+    font-size: 1.5EM;
+    padding: 20px;
+    border-style: solid;
+    border-width: 2px;
+    -webkit-border-radius: 5px 5px 0px 0px;
+    -moz-border-radius: 5px 5px 0px 0px;
+    border-radius: 5px 5px 0px 0px;
+    background-color: lightgray;
+}
+
+.userdetailb2 {
+    margin: 0px 25px 30px 25px;
+    border-style: solid;
+    border-width: 2px;
+    padding-left: 20px;
+    -webkit-border-radius: 0px 0px 5px 5px;
+    -moz-border-radius: 0px 0px 5px 5px;
+    border-radius: 0px 0px 5px 5px;
+}
+
+#lastName,
+#street,
+#place,
+#BSN,
+#birthdate,
+#email {
+    margin-left: 150px;
+    width: 800px;
+}
+
+#firstLetters,
+#mobileNumber,
+#postalCode,
+#huisNumber {
+    margin-left: 150px;
+    width: 400px;
+}
+
+#userDetailSubmit {
+    display: block;
+    width: 100px;
+}
